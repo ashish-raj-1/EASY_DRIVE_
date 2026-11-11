@@ -1,0 +1,707 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Drive Easy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            width: 92%;
+            margin: 20px auto;
+            padding: 12px 25px;
+            background: white;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 15px;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 25px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+            transform: rotate(-3deg);
+        }
+
+        .logo-text {
+            line-height: 1;
+        }
+
+        .logo-title {
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+         .logo-line {
+            width: 100%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 5px;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #64748b;
+        }
+
+         nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172554;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 10px 18px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: white;
+            background: #2563eb;
+        }
+
+        nav a.active {
+            color: white;
+            background: #2563eb;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+        .container {
+            width: 92%;
+            margin: 45px auto 30px;
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+        }
+
+         .sidebar {
+            width: 230px;
+            min-width: 230px;
+            min-height: 440px;
+            background: white;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 25px 20px;
+        }
+
+        .sidebar h3 {
+            color: #172554;
+            font-size: 18px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .sidebar h3::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px;
+            margin-top: 10px;
+            background-color: rgb(252, 86, 4);
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 10px;
+            margin-bottom: 7px;
+            text-decoration: none;
+            color: #444;
+            font-size: 15px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .sidebar a.active {
+            background: #172554;
+            color: white;
+            font-weight: bold;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            color: #172554;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #666;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 25px;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #dbeafe;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 42px;
+            color: #172554;
+            font-weight: bold;
+        }
+
+        .profile-header h2 {
+            color: #172554;
+            margin-bottom: 8px;
+        }
+
+        .profile-header p {
+            color: #666;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .detail-item label {
+            display: block;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .detail-item p {
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .section-title {
+            color: #172554;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: #172554;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn-orange {
+            background: #ff6b00;
+            color: white;
+        }
+
+        .btn-orange:hover {
+            background: #e65c00;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        #editProfileForm {
+            display: none;
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 7px;
+            margin-bottom: 20px;
+        }
+
+          footer {
+            margin-top: 70px;
+            background: #172554;
+            padding: 30px 20px;
+            text-align: center;
+            color: #cbd5e1;
+        }
+
+        footer h2 {
+            color: #06b6d4;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        footer h2 span {
+            color: #ff6b00;
+        }
+
+        footer p {
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            nav a {
+                margin: 0;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .details-grid,
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+   <header>
+        <div class="logo">
+            <div class="logo-icon">🚗</div>
+            <div class="logo-text">
+                <div class="logo-title">
+                    <span class="drive">DRIVE</span>
+                    <span class="bolt">⚡</span>
+                    <span class="easy">EASY</span>
+                </div>
+                <div class="logo-line"></div>
+                <div class="logo-subtitle" style="margin-left: 20px;">VEHICLE RENTAL SYSTEM</div>
+            </div>
+        </div>
+        <nav>
+            <a href="vehical_listing_page.html">🏠 Home</a>
+            <a href="vehicle_details.html">🚘 Vehicles</a>
+            <a href="contact.html">🎧 Contact</a>
+            <a href="myaccount.html" class="active">👤 My Account</a>
+            
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>MY ACCOUNT</h3>
+
+            <a href="dashboard.html">Dashboard</a>
+            <a href="mybookings.html">My Bookings</a>
+            <a href="profile.html" class="active">Profile</a>
+            <a href="change-password.html">Change Password</a>
+            <a href="logout.html">Logout</a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="page-title">
+                <h1>My Profile</h1>
+                <p>View and manage your personal information.</p>
+            </div>
+            
+
+            <!-- Profile Details -->
+            <section class="profile-card">
+
+                <div class="profile-header">
+                    <div class="profile-image">R</div>
+
+                    <div>
+                        <h2 id="displayName">Ashish Raj</h2>
+                        <p id="displayEmail">ashish@example.com</p>
+                        <br>
+                        <button class="btn btn-orange" onclick="showEditForm()">
+                            Edit Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="details-grid">
+
+                    <div class="detail-item">
+                        <label>Full Name</label>
+                        <p id="detailName">Ashish Raj</p>
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Email Address</label>
+                        <p id="detailEmail">ashish@example.com</p>
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Mobile Number</label>
+                        <p id="detailPhone">9153406273</p>
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Gender</label>
+                        <p id="detailGender">Male</p>
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Date of Birth</label>
+                        <p id="detailDob">2007-04-01</p>
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Address</label>
+                        <p id="detailAddress">Rajkot, Gujarat, India</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Edit Profile Form -->
+            <section class="profile-card" id="editProfileForm">
+
+                <h2 class="section-title">Edit Profile Information</h2>
+
+                <div class="message" id="successMessage">
+                    Profile updated successfully!
+                </div>
+
+                <form onsubmit="updateProfile(event)" novalidate>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="phone">Mobile Number</label>
+                            <input
+                                type="tel"
+                                id="phone"
+                                pattern="[0-9]{10}"
+                                maxlength="10"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address">
+                        </div>
+
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="submit" class="btn btn-primary">
+                            Save Changes
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn btn-orange"
+                            onclick="cancelEdit()"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+
+                </form>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+ <footer>
+        <h2>DRIVE <span>⚡</span> EASY</h2>
+        <p>VEHICLE RENTAL SYSTEM</p>
+        <p>© 2026 Drive Easy. All Rights Reserved.</p>
+        <p>Ride Smart · Ride Safe · Ride Easy 🚗</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        function showEditForm() {
+            document.getElementById("editProfileForm").style.display = "block";
+
+            document.getElementById("name").value =
+                document.getElementById("detailName").textContent;
+
+            document.getElementById("email").value =
+                document.getElementById("detailEmail").textContent;
+
+            document.getElementById("phone").value =
+                document.getElementById("detailPhone").textContent;
+
+            document.getElementById("gender").value =
+                document.getElementById("detailGender").textContent;
+
+            document.getElementById("dob").value =
+                document.getElementById("detailDob").textContent;
+
+            document.getElementById("address").value =
+                document.getElementById("detailAddress").textContent;
+
+            document.getElementById("editProfileForm").scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+
+        function updateProfile(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const gender = document.getElementById("gender").value;
+            const dob = document.getElementById("dob").value;
+            const address = document.getElementById("address").value.trim();
+
+            if (name === "") {
+                alert("Please enter your full name.");
+                return;
+            }
+
+            if (!/^[A-Za-z\s.'-]+$/.test(name)) {
+                alert("Please enter a valid name using letters only.");
+                return;
+            }
+
+            if (email === "") {
+                alert("Please enter your email address.");
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            if (phone === "") {
+                alert("Please enter your mobile number.");
+                return;
+            }
+
+            if (!/^[0-9]{10}$/.test(phone)) {
+                alert("Please enter a valid 10-digit mobile number.");
+                return;
+            }
+
+            if (gender === "") {
+                alert("Please select your gender.");
+                return;
+            }
+
+            if (dob === "") {
+                alert("Please select your date of birth.");
+                return;
+            }
+
+            if (new Date(dob) > new Date()) {
+                alert("Date of birth cannot be in the future.");
+                return;
+            }
+
+            if (address === "") {
+                alert("Please enter your address.");
+                return;
+            }
+
+            document.getElementById("displayName").textContent = name;
+            document.getElementById("displayEmail").textContent = email;
+
+            document.getElementById("detailName").textContent = name;
+            document.getElementById("detailEmail").textContent = email;
+            document.getElementById("detailPhone").textContent = phone;
+            document.getElementById("detailGender").textContent = gender;
+            document.getElementById("detailDob").textContent = dob;
+            document.getElementById("detailAddress").textContent = address;
+
+            document.querySelector(".profile-image").textContent =
+                name.charAt(0).toUpperCase();
+
+            document.getElementById("successMessage").style.display = "block";
+
+            document.getElementById("editProfileForm").style.display = "block";
+
+            setTimeout(function () {
+                document.getElementById("successMessage").style.display = "none";
+                document.getElementById("editProfileForm").style.display = "none";
+            }, 2000);
+        }
+
+        function cancelEdit() {
+            document.getElementById("editProfileForm").style.display = "none";
+            document.getElementById("successMessage").style.display = "none";
+        }
+        const navLinks = document.querySelectorAll("nav a");
+        navLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.forEach(function (item) {
+                    item.classList.remove("active");
+                });
+                this.classList.add("active");
+            });
+        });
+    </script>
+
+</body>
+</html>

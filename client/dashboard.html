@@ -1,0 +1,665 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Drive Easy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            width: 92%;
+            margin: 20px auto;
+            padding: 12px 25px;
+            background: white;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 15px;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 25px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+            transform: rotate(-3deg);
+        }
+
+        .logo-text {
+            line-height: 1;
+        }
+
+        .logo-title {
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .logo-line {
+            width: 100%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 5px;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #64748b;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172554;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 10px 18px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: white;
+            background: #2563eb;
+        }
+
+        nav a.active {
+            color: white;
+            background: #2563eb;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Main content */
+        main {
+            width: 92%;
+            margin: 25px auto 40px;
+            flex: 1;
+        }
+
+        .welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            color: #172554;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .date {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            color: #172554;
+            font-weight: bold;
+        }
+
+        .dashboard-layout {
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 230px;
+            min-width: 230px;
+            min-height: 440px;
+            background: white;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 25px 20px;
+        }
+
+        .sidebar h3 {
+            color: #172554;
+            font-size: 18px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .sidebar h3::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 2px;
+            margin-top: 10px;
+            background-color: rgb(252, 86, 4);
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 10px;
+            margin-bottom: 7px;
+            text-decoration: none;
+            color: #444;
+            font-size: 15px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .sidebar a.active {
+            background: #172554;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Dashboard content */
+        .dashboard-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: #172554;
+            margin-bottom: 18px;
+        }
+
+        /* Summary cards */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            border: 1px solid #e1e1e1;
+            border-left: 5px solid #ff6b00;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-card:nth-child(2) {
+            border-left-color: #2563eb;
+        }
+
+        .stat-card:nth-child(3) {
+            border-left-color: #06b6d4;
+        }
+
+        .stat-icon {
+            font-size: 27px;
+            margin-bottom: 14px;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card h2 {
+            color: #172554;
+            font-size: 28px;
+        }
+
+        /* Quick actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-decoration: none;
+            color: #333;
+            transition: 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            border-color: #2563eb;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .action-card h3 {
+            color: #172554;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .action-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .action-card span {
+            color: #ff6b00;
+            font-size: 25px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        /* Recent bookings */
+        .recent-bookings {
+            background: white;
+            padding: 22px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .table-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .table-heading h2 {
+            color: #172554;
+            font-size: 21px;
+        }
+
+        .view-all {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 580px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        th {
+            background: #e7e7e7;
+            color: #172554;
+        }
+
+        td {
+            color: #444;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .confirmed {
+            color: #166534;
+            background: #dcfce7;
+        }
+
+        .pending {
+            color: #92400e;
+            background: #fef3c7;
+        }
+
+        .completed {
+            color: #1d4ed8;
+            background: #dbeafe;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 70px;
+            background: #172554;
+            padding: 30px 20px;
+            text-align: center;
+            color: #cbd5e1;
+        }
+
+        footer h2 {
+            color: #06b6d4;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        footer h2 span {
+            color: #ff6b00;
+        }
+
+        footer p {
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .dashboard-layout {
+                gap: 18px;
+            }
+
+            .sidebar {
+                width: 200px;
+                min-width: 200px;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .dashboard-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-width: unset;
+                min-height: auto;
+            }
+
+            .sidebar a {
+                display: inline-block;
+                margin-right: 5px;
+            }
+
+            .dashboard-content {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            nav {
+                gap: 13px;
+            }
+
+            .stats,
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .recent-bookings {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🚗</div>
+            <div class="logo-text">
+                <div class="logo-title">
+                    <span class="drive">DRIVE</span>
+                    <span class="bolt">⚡</span>
+                    <span class="easy">EASY</span>
+                </div>
+                <div class="logo-line"></div>
+                <div class="logo-subtitle" style="margin-left: 20px;">VEHICLE RENTAL SYSTEM</div>
+            </div>
+        </div>
+
+        <nav>
+            <a href="vehical_listing_page.html">🏠 Home</a>
+            <a href="vehicle_details.html">🚘 Vehicles</a>
+            <a href="contact.html">🎧 Contact</a>
+            <a href="myaccount.html" class="active">👤 My Account</a>
+        </nav>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main>
+
+        <div class="dashboard-layout">
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h3>MY ACCOUNT</h3>
+
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="mybookings.html">My Bookings</a>
+                <a href="profile.html">Profile</a>
+                <a href="change-password.html">Change Password</a>
+                <a href="logout.html">Logout</a>
+            </aside>
+
+            <!-- Dashboard Main Area -->
+            <section class="dashboard-content">
+
+                <!-- Welcome Section -->
+                <div class="welcome">
+                    <div>
+                        <h1>My Dashboard</h1>
+                        <p>Welcome back! Manage your vehicle rentals in one place.</p>
+                    </div>
+
+                    <div class="date" id="currentDate"></div>
+                </div>
+
+                <h2 class="section-title">Booking Overview</h2>
+
+                <!-- Summary Cards -->
+                <div class="stats">
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🚗</div>
+                        <p>Total Bookings</p>
+                        <h2>3</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <p>Active Bookings</p>
+                        <h2>1</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <p>Completed Trips</p>
+                        <h2>1</h2>
+                    </div>
+
+                </div>
+
+                <!-- Quick Actions -->
+                <h2 class="section-title">Quick Actions</h2>
+
+                <div class="quick-actions">
+
+                    <a href="vehicles.html" class="action-card">
+                        <span>🚘</span>
+                        <h3>Rent a Vehicle</h3>
+                        <p>Explore our vehicles and find the right one for your journey.</p>
+                    </a>
+
+                    <a href="mybookings.html" class="action-card">
+                        <span>📋</span>
+                        <h3>My Bookings</h3>
+                        <p>View your bookings, dates, and reservation status.</p>
+                    </a>
+
+                </div>
+
+                <!-- Recent Bookings -->
+                <div class="recent-bookings">
+
+                    <div class="table-heading">
+                        <h2>Recent Bookings</h2>
+                        <a href="mybookings.html" class="view-all">View All →</a>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Vehicle</th>
+                                    <th>Pickup Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>B001</td>
+                                    <td>Honda City</td>
+                                    <td>20-05</td>
+                                    <td><span class="status confirmed">Confirmed</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>B002</td>
+                                    <td>Swift Dzire</td>
+                                    <td>21-05</td>
+                                    <td><span class="status pending">Pending</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>B003</td>
+                                    <td>Innova Crysta</td>
+                                    <td>22-05</td>
+                                    <td><span class="status completed">Completed</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <h2>DRIVE <span>⚡</span> EASY</h2>
+        <p>VEHICLE RENTAL SYSTEM</p>
+        <p>© 2026 Drive Easy. All Rights Reserved.</p>
+        <p>Ride Smart · Ride Safe · Ride Easy 🚗</p>
+    </footer>
+
+    <script>
+        // Display current date
+        const today = new Date();
+
+        document.getElementById("currentDate").textContent =
+            today.toLocaleDateString("en-IN", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            });
+
+        const navLinks = document.querySelectorAll("nav a");
+
+        navLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.forEach(function (item) {
+                    item.classList.remove("active");
+                });
+                this.classList.add("active");
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - Drive Easy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #172554;
+            color: white;
+            padding: 25px 15px;
+            flex-shrink: 0;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 30px;
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 12px;
+            font-size: 23px;
+            font-weight: 900;
+        }
+
+        .drive, .easy {
+            color: white;
+        }
+
+        .bolt {
+            color: #ff9f1c;
+        }
+
+        .logo-line {
+            width: 90%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 6px;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            color: #cbd5e1;
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #06b6d4;
+        }
+
+        /* Sidebar Links */
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: #e2e8f0;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #ff6b00;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 25px 30px;
+            min-width: 0;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .topbar h3 {
+            font-size: 22px;
+        }
+
+        .admin-name {
+            color: #ff6b00;
+            font-weight: bold;
+        }
+
+        /* Logout Card */
+        .logout-container {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-card {
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .logout-icon {
+            width: 75px;
+            height: 75px;
+            background: #fff0e6;
+            color: #ff6b00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            margin: 0 auto 20px;
+        }
+
+        .logout-card h1 {
+            font-size: 27px;
+            margin-bottom: 12px;
+            color: #172554;
+        }
+
+        .logout-card p {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logout-btn,
+        .cancel-btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .logout-btn {
+            background: #ff6b00;
+            color: white;
+        }
+
+        .logout-btn:hover {
+            background: #172554;
+        }
+
+        .cancel-btn {
+            background: #e2e8f0;
+            color: #172554;
+        }
+
+        .cancel-btn:hover {
+            background: #cbd5e1;
+        }
+
+        /* Responsive */
+        @media (max-width: 650px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .sidebar nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 5px;
+            }
+
+            .sidebar a {
+                text-align: center;
+                margin: 0;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .logout-card {
+                padding: 30px 18px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <div class="logo-icon">🚗</div>
+
+                <div class="logo-title">
+                    <span class="drive">DRIVE</span>
+                    <span class="bolt">⚡</span>
+                    <span class="easy">EASY</span>
+                </div>
+
+                <div class="logo-line"></div>
+
+                <div class="logo-subtitle">
+                    VEHICLE RENTAL SYSTEM
+                </div>
+
+            </div>
+
+            <h2>ADMIN PANEL</h2>
+
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="vehicles.html">Vehicles</a>
+                <a href="bookings.html">Bookings</a>
+                <a href="customers.html">Customers</a>
+                <a href="payments.html">Payments</a>
+                <a href="reports.html">Reports</a>
+                <a href="settings.html">Settings</a>
+                <a href="logout.html" class="active">Logout</a>
+            </nav>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="topbar">
+                <h3>Logout</h3>
+                <span class="admin-name">Admin</span>
+            </div>
+
+            <!-- Logout Confirmation -->
+            <div class="logout-container">
+
+                <div class="logout-card">
+
+                    <div class="logout-icon">↪</div>
+
+                    <h1>Are You Sure?</h1>
+
+                    <p>
+                        Are you sure you want to logout from
+                        your Drive Easy Admin Panel?
+                    </p>
+
+                    <div class="buttons">
+
+                        <button class="logout-btn" onclick="logoutUser()">
+                            YES, LOGOUT
+                        </button>
+
+                        <button class="cancel-btn"
+                            onclick="location.href='dashboard.html'">
+                            CANCEL
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+
+        function logoutUser() {
+
+            // Clear login information
+            localStorage.removeItem("loggedIn");
+            localStorage.removeItem("userEmail");
+
+            // Redirect to login page
+            window.location.href = "login.html";
+
+        }
+
+    </script>
+
+</body>
+</html>

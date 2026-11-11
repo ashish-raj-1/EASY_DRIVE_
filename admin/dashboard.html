@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Drive Easy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #172554;
+            color: white;
+            padding: 25px 15px;
+            flex-shrink: 0;
+        }
+
+        /* Full Project Logo */
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 12px;
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .drive, .easy {
+            color: white;
+        }
+
+        .bolt {
+            color: #ff9f1c;
+        }
+
+        .logo-line {
+            width: 90%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 6px;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            color: #cbd5e1;
+        }
+
+        /* Sidebar Heading */
+        .sidebar h2 {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #06b6d4;
+        }
+
+        /* Sidebar Links */
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: #e2e8f0;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #ff6b00;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 25px 30px;
+            min-width: 0;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .topbar h3 {
+            font-size: 22px;
+            color: #172554;
+        }
+
+        .admin-name {
+            color: #ff6b00;
+            font-weight: bold;
+        }
+
+        .page-heading {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* Statistics Cards */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b00;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-card p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card h2 {
+            font-size: 25px;
+            color: #172554;
+        }
+
+        /* Bottom Section */
+        .dashboard-bottom {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 18px;
+        }
+
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            min-width: 0;
+        }
+
+        .panel h3 {
+            margin-bottom: 18px;
+            font-size: 20px;
+            color: #172554;
+        }
+
+        /* Booking Table */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        th {
+            background: #7f7ff5;
+            color: white;
+            padding: 13px 10px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 13px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Booking Status */
+        .status {
+            padding: 5px 9px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .confirmed {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .completed {
+            background: #cffafe;
+            color: #0e7490;
+        }
+
+        .cancelled {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        /* Quick Actions */
+        .quick-actions button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #0c3ad2;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .quick-actions button:hover {
+            background: #ff6b00;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-bottom {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .sidebar nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 5px;
+            }
+
+            .sidebar a {
+                text-align: center;
+                margin: 0;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .page-heading {
+                font-size: 25px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <!-- Full Drive Easy Logo -->
+            <div class="logo">
+
+                <div class="logo-icon">🚗</div>
+
+                <div class="logo-title">
+                    <span class="drive">DRIVE</span>
+                    <span class="bolt">⚡</span>
+                    <span class="easy">EASY</span>
+                </div>
+
+                <div class="logo-line"></div>
+
+                <div class="logo-subtitle">
+                    VEHICLE RENTAL SYSTEM
+                </div>
+
+            </div>
+
+            <h2>ADMIN PANEL</h2>
+
+           <nav>
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="vehicles.html">Vehicles</a>
+                <a href="bookings.html">Bookings</a>
+                <a href="customers.html">Customers</a>
+                <a href="payments.html">Payments</a>
+                <a href="reports.html">Reports</a>
+                <a href="settings.html">Settings</a>
+                <a href="logout.html">Logout</a>
+            </nav>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="topbar">
+                <h3>Dashboard</h3>
+                <span class="admin-name">Admin</span>
+            </div>
+
+            <h1 class="page-heading">Dashboard</h1>
+
+            <!-- Statistics -->
+            <section class="stats">
+
+                <div class="stat-card">
+                    <p>Total Vehicles</p>
+                    <h2>52</h2>
+                </div>
+
+                <div class="stat-card">
+                    <p>Total Bookings</p>
+                    <h2>128</h2>
+                </div>
+
+                <div class="stat-card">
+                    <p>Total Customers</p>
+                    <h2>86</h2>
+                </div>
+
+                <div class="stat-card">
+                    <p>Revenue</p>
+                    <h2>₹2,45,000</h2>
+                </div>
+
+            </section>
+
+            <!-- Recent Bookings and Quick Actions -->
+            <section class="dashboard-bottom">
+
+                <!-- Recent Bookings -->
+                <div class="panel">
+
+                    <h3>Recent Bookings</h3>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Customer</th>
+                                    <th>Vehicle</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>B001</td>
+                                    <td>Ravi Kumar</td>
+                                    <td>Honda City</td>
+                                    <td>
+                                        <span class="status confirmed">
+                                            Confirmed
+                                        </span>
+                                    </td>
+                                    <td>₹4,000</td>
+                                </tr>
+
+                                <tr>
+                                    <td>B002</td>
+                                    <td>Amit Verma</td>
+                                    <td>Swift Dzire</td>
+                                    <td>
+                                        <span class="status pending">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td>₹3,600</td>
+                                </tr>
+
+                                <tr>
+                                    <td>B003</td>
+                                    <td>Neha Sharma</td>
+                                    <td>Creta</td>
+                                    <td>
+                                        <span class="status completed">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td>₹6,500</td>
+                                </tr>
+
+                                <tr>
+                                    <td>B004</td>
+                                    <td>Suresh Patel</td>
+                                    <td>Innova</td>
+                                    <td>
+                                        <span class="status cancelled">
+                                            Cancelled
+                                        </span>
+                                    </td>
+                                    <td>₹5,000</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="panel quick-actions">
+
+                    <h3>Quick Actions</h3>
+
+                    <button onclick="location.href='admin_vehicles.html'">
+                        Add Vehicle
+                    </button>
+
+                    <button onclick="location.href='admin_bookings.html'">
+                        New Booking
+                    </button>
+
+                    <button onclick="location.href='admin_customers.html'">
+                        Customers
+                    </button>
+
+                    <button onclick="location.href='admin_payments.html'">
+                        Payments
+                    </button>
+
+                    <button onclick="location.href='admin_reports.html'">
+                        Reports
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
+```

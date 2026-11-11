@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Customers - Drive Easy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #172554;
+            color: white;
+            padding: 25px 15px;
+            flex-shrink: 0;
+        }
+
+        /* Full Project Logo */
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 12px;
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .drive,
+        .easy {
+            color: white;
+        }
+
+        .bolt {
+            color: #ff9f1c;
+        }
+
+        .logo-line {
+            width: 90%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 6px;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            color: #cbd5e1;
+        }
+
+        /* Sidebar Heading */
+        .sidebar h2 {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #06b6d4;
+        }
+
+        /* Sidebar Links */
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: #e2e8f0;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #ff6b00;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 25px 30px;
+            min-width: 0;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .topbar h3 {
+            font-size: 22px;
+            color: #172554;
+        }
+
+        .admin-name {
+            color: #ff6b00;
+            font-weight: bold;
+        }
+
+        /* Page Heading */
+        .page-heading {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* Search and Add Customer */
+        .search-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-section input {
+            width: 280px;
+            padding: 11px;
+            border: 1px solid #64748b;
+            border-radius: 7px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search-section input:focus {
+            border-color: #ff6b00;
+        }
+
+        .add-btn {
+            background: #ff6b00;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            background: #172554;
+        }
+
+        /* Customer Table */
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            min-width: 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th {
+            background: #7f7ff5;
+            color: white;
+            padding: 13px 10px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 13px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* View / Edit Action */
+        .action-link {
+            color: #172554;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .action-link:hover {
+            color: #ff6b00;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1000px) {
+            .main-content {
+                padding: 25px 20px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .sidebar nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 5px;
+            }
+
+            .sidebar a {
+                text-align: center;
+                margin: 0;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .page-heading {
+                font-size: 25px;
+            }
+
+            .search-section input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <!-- Full Drive Easy Logo -->
+            <div class="logo">
+
+                <div class="logo-icon">🚗</div>
+
+                <div class="logo-title">
+                    <span class="drive">DRIVE</span>
+                    <span class="bolt">⚡</span>
+                    <span class="easy">EASY</span>
+                </div>
+
+                <div class="logo-line"></div>
+
+                <div class="logo-subtitle">
+                    VEHICLE RENTAL SYSTEM
+                </div>
+
+            </div>
+
+            <h2>ADMIN PANEL</h2>
+
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="vehicles.html">Vehicles</a>
+                <a href="bookings.html">Bookings</a>
+                <a href="customers.html" class="active">Customers</a>
+                <a href="payments.html">Payments</a>
+                <a href="reports.html">Reports</a>
+                <a href="settings.html">Settings</a>
+                <a href="logout.html">Logout</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="topbar">
+                <h3>Manage Customers</h3>
+                <span class="admin-name">Admin</span>
+            </div>
+
+            <h1 class="page-heading">Manage Customers</h1>
+
+            <!-- Search and Add Customer -->
+            <div class="search-section">
+
+                <input type="text" id="searchInput" placeholder="Search customers...">
+
+                <button class="add-btn" onclick="location.href='add_customers.html'">
+                    + Add Customer
+                </button>
+
+            </div>
+
+            <!-- Customer Table -->
+            <section class="panel">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="customerTable">
+
+                            <tr>
+                                <td>C001</td>
+                                <td>John Doe</td>
+                                <td>john@example.com</td>
+                                <td>9876543210</td>
+                                <td>
+                                    <a href="view_customer.html" class="action-link">
+                                        View / Edit
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>C002</td>
+                                <td>Alex Smith</td>
+                                <td>alex@example.com</td>
+                                <td>9876543211</td>
+                                <td>
+                                    <a href="view_customer.html" class="action-link">
+                                        View / Edit
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>C003</td>
+                                <td>Ravi Kumar</td>
+                                <td>ravi@example.com</td>
+                                <td>9876543212</td>
+                                <td>
+                                    <a href="view_customer.html" class="action-link">
+                                        View / Edit
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>C004</td>
+                                <td>Neha Sharma</td>
+                                <td>neha@example.com</td>
+                                <td>9876543213</td>
+                                <td>
+                                    <a href="view_customer.html" class="action-link">
+                                        View / Edit
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- JavaScript for Customer Search -->
+    <script>
+
+        document.getElementById("searchInput")
+            .addEventListener("input", function () {
+
+                let search = this.value.toLowerCase();
+
+                let rows = document.querySelectorAll("#customerTable tr");
+
+                rows.forEach(function (row) {
+
+                    let rowText = row.innerText.toLowerCase();
+
+                    if (rowText.includes(search)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+
+                });
+
+            });
+
+    </script>
+
+</body>
+
+</html>

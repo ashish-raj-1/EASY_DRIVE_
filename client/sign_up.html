@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Vehicle Rental System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            width: 92%;
+            margin: 20px auto;
+            padding: 12px 25px;
+            background: white;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 15px;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 25px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+            transform: rotate(-3deg);
+        }
+
+        .logo-text {
+            line-height: 1;
+        }
+
+        .logo-title {
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .drive {
+            color: #172554;
+        }
+
+        .bolt {
+            color: #ff6b00;
+        }
+
+        .easy {
+            color: #06b6d4;
+        }
+
+        .logo-line {
+            width: 100%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 5px;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #64748b;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172554;
+            margin-left: 10px;
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Signup Section */
+        .container {
+            width: 90%;
+            max-width: 450px;
+            margin: 40px auto;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        .signup-box {
+            background-color: white;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 30px;
+        }
+
+        .signup-box h2 {
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .signup-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .signup-box button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            background-color: #e5e5e5;
+            border: 1px solid #333;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .signup-box button:hover {
+            background-color: #ff6b00;
+            color: white;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #ff6b00;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 70px;
+            background: #172554;
+            padding: 30px 20px;
+            text-align: center;
+            color: #cbd5e1;
+        }
+
+        footer h2 {
+            color: #06b6d4;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        footer h2 span {
+            color: #ff6b00;
+        }
+
+        footer p {
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+            }
+
+            nav a {
+                margin: 0 3px;
+            }
+
+            .container {
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🚗</div>
+            <div class="logo-text">
+                <div class="logo-title">
+                    <span class="drive">DRIVE</span>
+                    <span class="bolt">⚡</span>
+                    <span class="easy">EASY</span>
+                </div>
+                <div class="logo-line"></div>
+                <div class="logo-subtitle" style="margin-left: 20px;">VEHICLE RENTAL SYSTEM</div>
+            </div>
+        </div>
+        <nav>
+            <a href="sign_in.html">← Back</a>
+        </nav>
+    </header>
+
+    <!-- Signup Section -->
+    <div class="container">
+        <h1>Login / Sign Up</h1>
+
+        <div class="signup-box">
+            <h2>SIGN UP</h2>
+
+            <form action="#" method="post" onsubmit="return validateSignup()" novalidate>
+                <input type="text" id="fullname" name="fullname" placeholder="Full Name">
+
+                <input type="email" id="email" name="email" placeholder="Email">
+
+                <input type="tel" id="phone" name="phone" placeholder="Phone Number" pattern="[0-9]{10}"
+                    title="Enter a valid 10-digit phone number">
+
+                <input type="password" id="password" name="password" placeholder="Password">
+
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+
+                <button type="submit">SIGN UP</button>
+            </form>
+
+            <div class="login-link">
+                Already have an account?
+                <a href="sign_in.html">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <h2>DRIVE <span>⚡</span> EASY</h2>
+        <p>VEHICLE RENTAL SYSTEM</p>
+        <p>© 2026 Drive Easy. All Rights Reserved.</p>
+        <p>Ride Smart · Ride Safe · Ride Easy 🚗</p>
+    </footer>
+
+    <script>
+        function validateSignup() {
+
+            const fullname = document.getElementById("fullname").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (fullname === "") {
+                alert("Please enter your full name.");
+                return false;
+            }
+
+            if (!/^[A-Za-z\s.'-]+$/.test(fullname)) {
+                alert("Please enter a valid full name using letters only.");
+                return false;
+            }
+
+            if (email === "") {
+                alert("Please enter your email address.");
+                return false;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            if (phone === "") {
+                alert("Please enter your phone number.");
+                return false;
+            }
+
+            if (!/^[0-9]{10}$/.test(phone)) {
+                alert("Please enter a valid 10-digit phone number.");
+                return false;
+            }
+
+            if (password === "") {
+                alert("Please enter your password.");
+                return false;
+            }
+
+            if (password.length < 8) {
+                alert("Password must contain at least 8 characters.");
+                return false;
+            }
+
+            if (confirmPassword === "") {
+                alert("Please confirm your password.");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Password and confirm password do not match.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+</body>
+
+</html>

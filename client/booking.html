@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Vehicle - Drive Easy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            width: 92%;
+            margin: 20px auto;
+            padding: 12px 25px;
+            background: white;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 15px;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 25px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+            transform: rotate(-3deg);
+        }
+
+        .logo-text {
+            line-height: 1;
+        }
+
+        .logo-title {
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .drive {
+            color: #172554;
+        }
+
+        .bolt {
+            color: #ff6b00;
+        }
+
+        .easy {
+            color: #06b6d4;
+        }
+
+        .logo-line {
+            width: 100%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 5px;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #64748b;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172554;
+            margin-left: 10px;
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Booking Section */
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 35px auto 60px;
+        }
+
+        .container h1 {
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        .booking-box {
+            display: flex;
+            gap: 40px;
+            background: white;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 30px;
+        }
+
+        /* Vehicle Image Placeholder */
+        .vehicle-image {
+            width: 32%;
+            min-width: 200px;
+            height: 250px;
+            border: 1px solid #999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0469ee, #e0e7ff);
+            border-radius: 10px;
+        }
+
+        .vehicle-icon {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+        }
+
+        .booking-details {
+            flex: 1;
+        }
+
+        .booking-details h2 {
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 135px 1fr;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .form-row label {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .form-row input,
+        .form-row select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background: white;
+            font-size: 14px;
+        }
+
+        .total {
+            margin-top: 35px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .booking-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .confirm-btn {
+            padding: 12px 18px;
+            background: #e5e5e5;
+            border: 1px solid #333;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .confirm-btn:hover {
+            background: #ff6b00;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 70px;
+            background: #172554;
+            padding: 30px 20px;
+            text-align: center;
+            color: #cbd5e1;
+        }
+
+        footer h2 {
+            color: #06b6d4;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        footer h2 span {
+            color: #ff6b00;
+        }
+
+        footer p {
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 750px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+            }
+
+            nav a {
+                margin: 0 3px;
+            }
+
+            .booking-box {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .vehicle-image {
+                width: 100%;
+                min-width: unset;
+                height: 200px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .booking-bottom {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .confirm-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🚗</div>
+            <div class="logo-text">
+                <div class="logo-title">
+                    <span class="drive">DRIVE</span>
+                    <span class="bolt">⚡</span>
+                    <span class="easy">EASY</span>
+                </div>
+                <div class="logo-line"></div>
+                <div class="logo-subtitle" style="margin-left: 20px;">VEHICLE RENTAL SYSTEM</div>
+            </div>
+        </div>
+
+        <nav>
+            <a href="vehical_listing_page.html">🏠 Home</a>
+            <a href="vehicle_details.html">🚘 Vehicles</a>
+            <a href="contact.html">🎧 Contact</a>
+            <a href="myaccount.html">👤 My Account</a>
+        </nav>
+    </header>
+
+    <!-- Booking Section -->
+    <div class="container">
+
+        <h1>Book Vehicle</h1>
+
+        <div class="booking-box">
+
+            <div class="vehicle-image">
+                <span class="vehicle-icon">🚗</span>
+            </div>
+
+            <div class="booking-details">
+
+                <h2>Booking Details</h2>
+
+                <form id="bookingForm">
+
+                    <div class="form-row">
+                        <label for="location">Pickup Location</label>
+
+                        <select id="location">
+                            <option value="">Select Location</option>
+                            <option value="Rajkot">Rajkot</option>
+                            <option value="Ahmedabad">Ahmedabad</option>
+                            <option value="Surat">Surat</option>
+                            <option value="Vadodara">Vadodara</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="pickupDate">Pickup Date</label>
+                        <input type="date" id="pickupDate">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="dropDate">Drop-off Date</label>
+                        <input type="date" id="dropDate">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="payment">Payment Method</label>
+
+                        <select id="payment">
+                            <option value="">Select Payment Method</option>
+                            <option value="UPI">UPI</option>
+                            <option value="Card">Debit / Credit Card</option>
+                            <option value="Cash">Cash</option>
+                        </select>
+                    </div>
+
+                    <div class="booking-bottom">
+
+                        <div class="total">
+                            Estimated Total: ₹<span id="total">0</span>
+                        </div>
+
+                        <button type="submit" class="confirm-btn">
+                            CONFIRM BOOKING
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <h2>DRIVE <span>⚡</span> EASY</h2>
+        <p>VEHICLE RENTAL SYSTEM</p>
+        <p>© 2026 Drive Easy. All Rights Reserved.</p>
+        <p>Ride Smart · Ride Safe · Ride Easy 🚗</p>
+    </footer>
+
+    <script>
+        const pickupDate = document.getElementById("pickupDate");
+        const dropDate = document.getElementById("dropDate");
+        const total = document.getElementById("total");
+
+        // GET THE SELECTED VEHICLE PRICE FROM THE URL
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const urlPrice = Number(urlParams.get("price"));
+
+        // Use the selected vehicle price instead of a fixed rate
+        const dailyRate = Number.isFinite(urlPrice) && urlPrice > 0
+            ? urlPrice
+            : 1500;
+
+        // Set today's date as the earliest pickup date
+        const today = new Date();
+
+        const todayString =
+            today.getFullYear() + "-" +
+            String(today.getMonth() + 1).padStart(2, "0") + "-" +
+            String(today.getDate()).padStart(2, "0");
+
+        pickupDate.min = todayString;
+        dropDate.min = todayString;
+
+        function calculateTotal() {
+            if (!pickupDate.value || !dropDate.value) {
+                total.textContent = "0";
+                return;
+            }
+
+            const pickup = new Date(pickupDate.value + "T00:00:00");
+            const drop = new Date(dropDate.value + "T00:00:00");
+
+            const days = Math.ceil(
+                (drop - pickup) / (1000 * 60 * 60 * 24)
+            );
+
+            if (days <= 0) {
+                total.textContent = "0";
+                return;
+            }
+
+            // Calculate using the selected vehicle's daily rate
+            total.textContent =
+                (days * dailyRate).toLocaleString("en-IN");
+        }
+
+        pickupDate.addEventListener("change", function () {
+            dropDate.min = pickupDate.value || todayString;
+
+            if (dropDate.value && dropDate.value <= pickupDate.value) {
+                dropDate.value = "";
+            }
+
+            calculateTotal();
+        });
+
+        dropDate.addEventListener("change", calculateTotal);
+
+        // FORM VALIDATION
+        document.getElementById("bookingForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const location = document.getElementById("location").value;
+            const payment = document.getElementById("payment").value;
+
+            if (location === "") {
+                alert("Please select a pickup location.");
+                return;
+            }
+
+            if (pickupDate.value === "") {
+                alert("Please select a pickup date.");
+                return;
+            }
+
+            if (pickupDate.value < todayString) {
+                alert("Pickup date cannot be in the past.");
+                return;
+            }
+
+            if (dropDate.value === "") {
+                alert("Please select a drop-off date.");
+                return;
+            }
+
+            if (dropDate.value <= pickupDate.value) {
+                alert("Drop-off date must be after the pickup date.");
+                return;
+            }
+
+            if (payment === "") {
+                alert("Please select a payment method.");
+                return;
+            }
+
+            alert(
+                "Booking details submitted!\n\n" +
+                "Pickup Location: " + location + "\n" +
+                "Pickup Date: " + pickupDate.value + "\n" +
+                "Drop-off Date: " + dropDate.value + "\n" +
+                "Payment Method: " + payment + "\n" +
+                "Estimated Total: ₹" + total.textContent
+            );
+        });
+    </script>
+
+</body>
+
+</html>

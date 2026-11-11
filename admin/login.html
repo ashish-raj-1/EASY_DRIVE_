@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Drive Easy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172554;
+            min-height: 100vh;
+            padding: 25px 20px;
+        }
+
+        /* Back to Home */
+        .back-home {
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            text-decoration: none;
+            color: #172554;
+            font-weight: bold;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .back-home:hover {
+            color: #ff6b00;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 35px auto 30px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+            transform: rotate(-3deg);
+        }
+
+        .logo-title {
+            font-size: 27px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .drive {
+            color: #172554;
+        }
+
+        .bolt {
+            color: #ff6b00;
+        }
+
+        .easy {
+            color: #172554;
+        }
+
+        .logo-line {
+            width: 100%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 5px;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #64748b;
+            text-align: center;
+        }
+
+        /* Page Heading */
+        .page-title {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #64748b;
+            font-weight: bold;
+        }
+
+        /* Login Box */
+        .login-container {
+            width: 90%;
+            max-width: 850px;
+            margin: 30px auto;
+            background: white;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Admin Information */
+        .admin-info {
+            background: #172554;
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-info .icon {
+            font-size: 65px;
+            color: #ff9f1c;
+            margin-bottom: 20px;
+        }
+
+        .admin-info h2 {
+            margin-bottom: 15px;
+            font-size: 26px;
+        }
+
+        .admin-info p {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        /* Login Form */
+        .login-form {
+            padding: 45px 35px;
+        }
+
+        .login-form h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .login-form .subtitle {
+            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            border-color: #ff6b00;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 22px;
+            font-size: 14px;
+            color: #475569;
+        }
+
+        .remember input {
+            accent-color: #ff6b00;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            background: #ff6b00;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #e65c00;
+        }
+
+        /* Responsive */
+        @media (max-width: 750px) {
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .back-home {
+                top: 15px;
+                left: 15px;
+                font-size: 13px;
+            }
+
+            .logo {
+                margin-top: 55px;
+            }
+
+            .logo-title {
+                font-size: 22px;
+            }
+
+            .login-container {
+                width: 95%;
+            }
+
+            .login-form {
+                padding: 30px 22px;
+            }
+
+            .admin-info {
+                padding: 35px 20px;
+            }
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Back to Home -->
+    <a href="../index.html" class="back-home">
+        ← Back to Home
+    </a>
+
+    <!-- Logo -->
+    <div class="logo">
+        <div class="logo-icon">🚗</div>
+
+        <div class="logo-text">
+            <div class="logo-title">
+                <span class="drive">DRIVE</span>
+                <span class="bolt">⚡</span>
+                <span class="easy">EASY</span>
+            </div>
+
+            <div class="logo-line"></div>
+
+            <div class="logo-subtitle">
+                VEHICLE RENTAL SYSTEM
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Heading -->
+    <section class="page-title">
+        <p>ADMIN LOGIN</p>
+    </section>
+
+    <!-- Login Container -->
+    <main class="login-container">
+
+        <!-- Admin Information -->
+        <section class="admin-info">
+
+            <div class="icon">🚗</div>
+
+            <h2>Welcome Admin</h2>
+
+            <p>
+                Manage vehicles, customers and bookings
+                easily through your admin panel.
+            </p>
+
+        </section>
+
+        <!-- Login Form -->
+        <section class="login-form">
+
+            <h2>Admin Login</h2>
+
+            <p class="subtitle">
+                Enter your login details to continue.
+            </p>
+
+            <form id="adminLoginForm" novalidate>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Enter username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter password">
+                </div>
+
+                <label class="remember">
+                    <input type="checkbox" id="remember">
+                    Remember Me
+                </label>
+
+                <button type="submit" class="login-btn">
+                    LOGIN
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById("adminLoginForm").addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            let username = document.getElementById("username").value.trim();
+            let password = document.getElementById("password").value;
+
+            // Username Validation
+            if (username === "") {
+                alert("Please enter your username!");
+                return;
+            }
+
+            // Password Validation
+            if (password.trim() === "") {
+                alert("Please enter your password!");
+                return;
+            }
+
+            // Minimum 8 characters
+            if (password.length < 8) {
+                alert("Password must contain at least 8 characters!");
+                return;
+            }
+
+            // At least one uppercase letter
+            if (!/[A-Z]/.test(password)) {
+                alert("Password must contain at least one uppercase letter!");
+                return;
+            }
+
+            // At least one lowercase letter
+            if (!/[a-z]/.test(password)) {
+                alert("Password must contain at least one lowercase letter!");
+                return;
+            }
+
+            // At least one number
+            if (!/[0-9]/.test(password)) {
+                alert("Password must contain at least one number!");
+                return;
+            }
+
+            // At least one special character
+            if (!/[!@#$%^&*(),.?":{}|<>_\-+=\/[\]\\~`;' ]/.test(password)) {
+                alert("Password must contain at least one special character!");
+                return;
+            }
+
+            // Login Check
+            if (username === "ashishrajput2536@gmail.com" && password === "Ashish@12345") {
+
+                alert("Login Successful!");
+
+                window.location.href = "dashboard.html";
+
+            } else {
+
+                alert("Invalid Username or Password!");
+
+            }
+
+        });
+    </script>
+
+</body>
+</html>

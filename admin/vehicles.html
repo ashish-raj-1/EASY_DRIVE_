@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Vehicles - Drive Easy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #172554;
+            color: white;
+            padding: 25px 15px;
+            flex-shrink: 0;
+        }
+
+        /* Full Project Logo */
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 12px;
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .drive,
+        .easy {
+            color: white;
+        }
+
+        .bolt {
+            color: #ff9f1c;
+        }
+
+        .logo-line {
+            width: 90%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 6px;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            color: #cbd5e1;
+        }
+
+        /* Sidebar Heading */
+        .sidebar h2 {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #06b6d4;
+        }
+
+        /* Sidebar Links */
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: #e2e8f0;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #ff6b00;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 25px 30px;
+            min-width: 0;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .topbar h3 {
+            font-size: 22px;
+            color: #172554;
+        }
+
+        .admin-name {
+            color: #ff6b00;
+            font-weight: bold;
+        }
+
+        /* Page Heading */
+        .heading-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .page-heading {
+            font-size: 30px;
+        }
+
+        /* Buttons */
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 7px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .add-btn {
+            background: #ff6b00;
+            color: white;
+            padding: 12px 18px;
+            font-size: 13px;
+        }
+
+        .add-btn:hover {
+            background: #172554;
+        }
+
+        /* Search and Filter */
+        .filter-section {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            border: 1px solid #64748b;
+            border-radius: 7px;
+            background: white;
+            font-size: 13px;
+            color: #172554;
+        }
+
+        input {
+            width: 230px;
+        }
+
+        select {
+            width: 145px;
+        }
+
+        .filter-btn {
+            background: #172554;
+            color: white;
+            padding: 10px 22px;
+            font-size: 13px;
+        }
+
+        .filter-btn:hover {
+            background: #ff6b00;
+        }
+
+        /* Vehicle Table */
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            min-width: 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th {
+            background: #7f7ff5;
+            color: white;
+            padding: 13px 10px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 13px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Vehicle Status */
+        .status {
+            padding: 5px 9px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .available {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .rented {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1000px) {
+            .main-content {
+                padding: 25px 20px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .sidebar nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 5px;
+            }
+
+            .sidebar a {
+                text-align: center;
+                margin: 0;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .page-heading {
+                font-size: 25px;
+            }
+
+            .heading-row {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <!-- Full Drive Easy Logo -->
+            <div class="logo">
+
+                <div class="logo-icon">🚗</div>
+
+                <div class="logo-title">
+                    <span class="drive">DRIVE</span>
+                    <span class="bolt">⚡</span>
+                    <span class="easy">EASY</span>
+                </div>
+
+                <div class="logo-line"></div>
+
+                <div class="logo-subtitle">
+                    VEHICLE RENTAL SYSTEM
+                </div>
+
+            </div>
+
+            <h2>ADMIN PANEL</h2>
+
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="vehicles.html" class="active">Vehicles</a>
+                <a href="bookings.html">Bookings</a>
+                <a href="customers.html">Customers</a>
+                <a href="payments.html">Payments</a>
+                <a href="reports.html">Reports</a>
+                <a href="settings.html">Settings</a>
+                <a href="logout.html">Logout</a>
+            </nav>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="topbar">
+                <h3>Manage Vehicles</h3>
+                <span class="admin-name">Admin</span>
+            </div>
+
+            <!-- Page Heading -->
+            <div class="heading-row">
+
+                <h1 class="page-heading">Manage Vehicles</h1>
+
+                <button class="add-btn" onclick="location.href='add_vehicles.html'">
+                    + Add New Vehicle
+                </button>
+
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="filter-section">
+
+                <input type="text" id="searchInput" placeholder="Search vehicles...">
+
+                <select id="typeFilter">
+                    <option value="">All Types</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Bike">Bike</option>
+                </select>
+
+                <select id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="Available">Available</option>
+                    <option value="Rented">Rented</option>
+                </select>
+
+                <button class="filter-btn" onclick="filterVehicles()">
+                    Filter
+                </button>
+
+            </div>
+
+            <!-- Vehicles Table -->
+            <section class="panel">
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Vehicle</th>
+                                <th>Type</th>
+                                <th>Registration</th>
+                                <th>Price/Day</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="vehicleTable">
+
+                            <tr>
+                                <td>V001</td>
+                                <td>Honda City</td>
+                                <td>Sedan</td>
+                                <td>GJ01AB1234</td>
+                                <td>₹1500</td>
+                                <td>
+                                    <span class="status available">
+                                        Available
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>V002</td>
+                                <td>Swift Dzire</td>
+                                <td>Sedan</td>
+                                <td>GJ01CD5678</td>
+                                <td>₹1200</td>
+                                <td>
+                                    <span class="status available">
+                                        Available
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>V003</td>
+                                <td>Hyundai Creta</td>
+                                <td>SUV</td>
+                                <td>GJ01EF9012</td>
+                                <td>₹2200</td>
+                                <td>
+                                    <span class="status rented">
+                                        Rented
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>V004</td>
+                                <td>Innova Crysta</td>
+                                <td>SUV</td>
+                                <td>GJ01GH3456</td>
+                                <td>₹2500</td>
+                                <td>
+                                    <span class="status available">
+                                        Available
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>V005</td>
+                                <td>Royal Enfield</td>
+                                <td>Bike</td>
+                                <td>GJ01IJ7890</td>
+                                <td>₹800</td>
+                                <td>
+                                    <span class="status available">
+                                        Available
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- JavaScript for Search and Filter -->
+    <script>
+
+        function filterVehicles() {
+
+            let search = document.getElementById("searchInput")
+                .value.toLowerCase();
+
+            let type = document.getElementById("typeFilter").value;
+
+            let status = document.getElementById("statusFilter").value;
+
+            let rows = document.querySelectorAll("#vehicleTable tr");
+
+            rows.forEach(function (row) {
+
+                let rowText = row.innerText.toLowerCase();
+                let vehicleType = row.cells[2].innerText;
+                let vehicleStatus = row.cells[5].innerText.trim();
+
+                let searchMatch = rowText.includes(search);
+                let typeMatch = type === "" || vehicleType === type;
+                let statusMatch = status === "" || vehicleStatus === status;
+
+                if (searchMatch && typeMatch && statusMatch) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+
+            });
+
+        }
+
+        document.getElementById("searchInput")
+            .addEventListener("input", filterVehicles);
+
+    </script>
+
+</body>
+
+</html>
+```

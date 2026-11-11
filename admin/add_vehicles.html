@@ -1,0 +1,626 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Vehicle - Drive Easy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #172554;
+            color: white;
+            padding: 25px 15px;
+            flex-shrink: 0;
+        }
+
+        /* Full Project Logo */
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 12px;
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .drive, .easy {
+            color: white;
+        }
+
+        .bolt {
+            color: #ff9f1c;
+        }
+
+        .logo-line {
+            width: 90%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 6px;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            color: #cbd5e1;
+        }
+
+        /* Sidebar Heading */
+        .sidebar h2 {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #06b6d4;
+        }
+
+        /* Sidebar Links */
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: #e2e8f0;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #ff6b00;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 25px 30px;
+            min-width: 0;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .topbar h3 {
+            font-size: 22px;
+            color: #172554;
+        }
+
+        .admin-name {
+            color: #ff6b00;
+            font-weight: bold;
+        }
+
+        /* Page Heading */
+        .page-heading {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* Form Panel */
+        .form-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .vehicle-form {
+            display: grid;
+            grid-template-columns: 1fr 1.7fr;
+            gap: 25px;
+        }
+
+        /* Vehicle Photo */
+        .photo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .photo-box {
+            width: 100%;
+            max-width: 250px;
+            height: 220px;
+            border: 2px dashed #94a3b8;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: #64748b;
+            font-size: 13px;
+            background: #f8fafc;
+            overflow: hidden;
+        }
+
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .upload-btn {
+            margin-top: 12px;
+            background: #172554;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .upload-btn:hover {
+            background: #ff6b00;
+        }
+
+        #vehiclePhoto {
+            display: none;
+        }
+
+        /* Form Fields */
+        .form-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #172554;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #64748b;
+            border-radius: 7px;
+            font-size: 13px;
+            outline: none;
+            color: #172554;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #ff6b00;
+        }
+
+        .description {
+            grid-column: 1 / 3;
+        }
+
+        .description textarea {
+            height: 85px;
+            resize: vertical;
+        }
+
+        /* Form Buttons */
+        .form-buttons {
+            grid-column: 1 / 3;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .save-btn,
+        .cancel-btn {
+            padding: 11px 25px;
+            border: none;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .save-btn {
+            background: #ff6b00;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #172554;
+        }
+
+        .cancel-btn {
+            background: #e2e8f0;
+            color: #172554;
+        }
+
+        .cancel-btn:hover {
+            background: #cbd5e1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1000px) {
+            .vehicle-form {
+                grid-template-columns: 1fr;
+            }
+
+            .photo-section {
+                align-items: flex-start;
+            }
+
+            .photo-box {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .sidebar nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 5px;
+            }
+
+            .sidebar a {
+                text-align: center;
+                margin: 0;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .page-heading {
+                font-size: 25px;
+            }
+
+            .form-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .description,
+            .form-buttons {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <!-- Full Drive Easy Logo -->
+            <div class="logo">
+
+                <div class="logo-icon">🚗</div>
+
+                <div class="logo-title">
+                    <span class="drive">DRIVE</span>
+                    <span class="bolt">⚡</span>
+                    <span class="easy">EASY</span>
+                </div>
+
+                <div class="logo-line"></div>
+
+                <div class="logo-subtitle">
+                    VEHICLE RENTAL SYSTEM
+                </div>
+
+            </div>
+
+            <h2>ADMIN PANEL</h2>
+
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="vehicles.html" class="active">Vehicles</a>
+                <a href="bookings.html">Bookings</a>
+                <a href="customers.html">Customers</a>
+                <a href="payments.html">Payments</a>
+                <a href="reports.html">Reports</a>
+                <a href="settings.html">Settings</a>
+                <a href="logout.html">Logout</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="topbar">
+                <h3>Add New Vehicle</h3>
+                <span class="admin-name">Admin</span>
+            </div>
+
+            <h1 class="page-heading">Add New Vehicle</h1>
+
+            <!-- Vehicle Form -->
+            <section class="form-panel">
+
+                <form class="vehicle-form" id="vehicleForm" novalidate>
+
+                    <!-- Vehicle Photo -->
+                    <div class="photo-section">
+
+                        <div class="photo-box">
+                            <span id="photoText">VEHICLE PHOTO</span>
+                            <img id="previewImage" alt="Vehicle Preview">
+                        </div>
+
+                        <label for="vehiclePhoto" class="upload-btn">
+                            Upload Photo
+                        </label>
+
+                        <input type="file" id="vehiclePhoto"
+                            accept="image/*">
+
+                    </div>
+
+                    <!-- Form Fields -->
+                    <div class="form-fields">
+
+                        <div class="form-group">
+                            <label>Vehicle Name</label>
+                            <input type="text" id="vehicleName"
+                                placeholder="Enter Vehicle Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Brand</label>
+                            <input type="text" id="brand"
+                                placeholder="Enter Brand">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Model</label>
+                            <input type="text" id="model"
+                                placeholder="Enter Model">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select id="type">
+                                <option value="">Select Type</option>
+                                <option>Car</option>
+                                <option>Sedan</option>
+                                <option>SUV</option>
+                                <option>Bike</option>
+                                <option>Scooter</option>
+                                <option>Van</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Registration No.</label>
+                            <input type="text" id="registration"
+                                placeholder="Enter Registration No.">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Price / Day</label>
+                            <input type="number" id="price"
+                                placeholder="Enter Price / Day"
+                                min="1">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fuel Type</label>
+                            <select id="fuel">
+                                <option value="">Select Fuel Type</option>
+                                <option>Petrol</option>
+                                <option>Diesel</option>
+                                <option>Electric</option>
+                                <option>CNG</option>
+                                <option>Hybrid</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Transmission</label>
+                            <select id="transmission">
+                                <option value="">Select Transmission</option>
+                                <option>Manual</option>
+                                <option>Automatic</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group description">
+                            <label>Description</label>
+                            <textarea id="description"
+                                placeholder="Enter Vehicle Description"></textarea>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="form-buttons">
+
+                            <button type="submit" class="save-btn">
+                                SAVE
+                            </button>
+
+                            <button type="button" class="cancel-btn"
+                                onclick="location.href='vehicles.html'">
+                                CANCEL
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+
+        // Vehicle Photo Preview
+        document.getElementById("vehiclePhoto")
+            .addEventListener("change", function() {
+
+                let file = this.files[0];
+
+                if (file) {
+
+                    let image = document.getElementById("previewImage");
+
+                    image.src = URL.createObjectURL(file);
+                    image.style.display = "block";
+
+                    document.getElementById("photoText").style.display = "none";
+                }
+
+            });
+
+        // Save Vehicle
+        document.getElementById("vehicleForm")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                // Get field values
+                const vehicleName = document.getElementById("vehicleName").value.trim();
+                const brand = document.getElementById("brand").value.trim();
+                const model = document.getElementById("model").value.trim();
+                const type = document.getElementById("type").value;
+                const registration = document.getElementById("registration").value.trim();
+                const price = document.getElementById("price").value;
+                const fuel = document.getElementById("fuel").value;
+                const transmission = document.getElementById("transmission").value;
+                const description = document.getElementById("description").value.trim();
+
+                // Vehicle Name Validation
+                if (vehicleName === "") {
+                    alert("Please enter vehicle name.");
+                    return;
+                }
+
+                // Brand Validation
+                if (brand === "") {
+                    alert("Please enter brand name.");
+                    return;
+                }
+
+                // Model Validation
+                if (model === "") {
+                    alert("Please enter vehicle model.");
+                    return;
+                }
+
+                // Type Validation
+                if (type === "") {
+                    alert("Please select vehicle type.");
+                    return;
+                }
+
+                // Registration Number Validation
+                if (registration === "") {
+                    alert("Please enter registration number.");
+                    return;
+                }
+
+                // Price Validation
+                if (price === "") {
+                    alert("Please enter vehicle price per day.");
+                    return;
+                }
+
+                if (Number(price) <= 0 || !Number.isFinite(Number(price))) {
+                    alert("Price must be greater than 0.");
+                    return;
+                }
+
+                // Fuel Type Validation
+                if (fuel === "") {
+                    alert("Please select fuel type.");
+                    return;
+                }
+
+                // Transmission Validation
+                if (transmission === "") {
+                    alert("Please select transmission.");
+                    return;
+                }
+
+                // Description Validation
+                if (description === "") {
+                    alert("Please enter vehicle description.");
+                    return;
+                }
+
+                alert("Vehicle details saved successfully!");
+
+                window.location.href = "vehicles.html";
+
+            });
+
+    </script>
+
+</body>
+</html>

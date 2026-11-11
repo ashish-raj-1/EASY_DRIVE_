@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive Easy - Vehicle Rental System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #172554;
+        }
+
+        /* HEADER */
+        header {
+            width: 92%;
+            margin: 20px auto;
+            padding: 12px 25px;
+            background: white;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 15px;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b00, #ff9f1c);
+            border-radius: 14px 5px 14px 5px;
+            font-size: 25px;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.35);
+            transform: rotate(-3deg);
+        }
+
+        .logo-text {
+            line-height: 1;
+        }
+
+        .logo-title {
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .drive {
+            color: #172554;
+        }
+
+        .bolt {
+            color: #ff6b00;
+        }
+
+        .easy {
+            color: #06b6d4;
+        }
+
+        .logo-line {
+            width: 100%;
+            height: 3px;
+            margin-top: 5px;
+            background: linear-gradient(90deg, #ff6b00, #06b6d4);
+            border-radius: 10px;
+        }
+
+        .logo-subtitle {
+            margin-top: 5px;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #64748b;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172554;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: white;
+            background: #2563eb;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            width: 92%;
+            margin: 25px auto;
+            padding: 28px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #172554, #4f46e5, #06b6d4);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hero h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #e0f2fe;
+            line-height: 1.6;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 14px;
+            padding: 14px;
+            font-weight: bold;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            width: 92%;
+            margin: 35px auto;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .toolbar h2 {
+            font-size: 28px;
+            color: #172554;
+        }
+
+        .vehicle-count {
+            font-size: 15px;
+            font-weight: normal;
+            color: #64748b;
+        }
+
+        .search-sort {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        input,
+        select {
+            padding: 11px;
+            border: 1px solid #dbe3ee;
+            border-radius: 9px;
+            outline: none;
+            font-size: 14px;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+        }
+
+        /* PAGE LAYOUT */
+        .content {
+            display: grid;
+            grid-template-columns: 225px 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        /* FILTER SIDEBAR */
+        .filters {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            border: 1px solid #dbe3ee;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .filters h3 {
+            color: #172554;
+            margin-bottom: 22px;
+            font-size: 20px;
+        }
+
+        .filters h4 {
+            margin: 22px 0 12px;
+            color: #172554;
+        }
+
+        .filter-option {
+            display: block;
+            margin: 14px 0;
+            color: #475569;
+            cursor: pointer;
+        }
+
+        .filter-option input {
+            margin-right: 8px;
+            accent-color: #2563eb;
+        }
+
+        .price-label {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            padding: 0;
+            margin: 15px 0;
+            accent-color: #ff6b00;
+        }
+
+        .clear-btn {
+            width: 100%;
+            padding: 11px;
+            background: #eff6ff;
+            color: #2563eb;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .clear-btn:hover {
+            background: #dbeafe;
+        }
+
+        /* VEHICLE GRID */
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .vehicle-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #dbe3ee;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            transition: 0.3s;
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(23, 37, 84, 0.15);
+        }
+
+        .vehicle-image {
+            height: 145px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .car-bg {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        }
+
+        .suv-bg {
+            background: linear-gradient(135deg, #ffedd5, #fed7aa);
+        }
+
+        .van-bg {
+            background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+        }
+
+        .bike-bg {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+        }
+
+        .scooter-bg {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+        }
+
+        .vehicle-icon {
+            font-size: 65px;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.15));
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: white;
+            color: #2563eb;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .vehicle-info {
+            padding: 16px;
+        }
+
+        .vehicle-info h3 {
+            color: #172554;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .description {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            color: #ff6b00;
+            font-size: 18px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .price span {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: normal;
+        }
+
+        /* BOOK NOW BUTTON */
+        .vehicle-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .book-btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: #172554;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .book-btn:hover {
+            background: #ff6b00;
+            transform: translateY(-2px);
+        }
+
+        /* VIEW DETAILS BUTTON */
+        .all-details-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .all-details-btn {
+            background: #172554;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .all-details-btn:hover {
+            background: #ff6b00;
+            transform: translateY(-2px);
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 35px;
+            text-align: center;
+            border-radius: 12px;
+            color: #64748b;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 70px;
+            background: #172554;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        footer h3 {
+            margin-bottom: 10px;
+            color: #06b6d4;
+            font-size: 24px;
+        }
+
+        footer .footer-bolt {
+            color: #ff6b00;
+        }
+
+        footer p {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin: 7px;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1100px) {
+            .vehicle-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .logo-title {
+                font-size: 20px;
+            }
+
+            nav {
+                justify-content: center;
+                gap: 5px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 9px;
+            }
+
+            .hero {
+                padding: 22px;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .vehicle-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toolbar {
+                align-items: stretch;
+            }
+
+            .toolbar h2 {
+                font-size: 24px;
+            }
+
+            .search-sort {
+                width: 100%;
+            }
+
+            .search-sort input,
+            .search-sort select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🚗</div>
+            <div class="logo-text">
+                <div class="logo-title">
+                    <span class="drive">DRIVE</span>
+                    <span class="bolt">⚡</span>
+                    <span class="easy">EASY</span>
+                </div>
+                <div class="logo-line"></div>
+                <div class="logo-subtitle" style="margin-left: 20px;">
+                    VEHICLE RENTAL SYSTEM
+                </div>
+            </div>
+        </div>
+
+        <nav>
+            <a href="vehical_listing_page.html" class="active">🏠 Home</a>
+            <a href="vehicle_details.html">🚘 Vehicles</a>
+            <a href="contact.html">🎧 Contact</a>
+            <a href="myaccount.html">👤 My Account</a>
+            
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div>
+            <h1>FIND THE BEST VEHICLE FOR YOUR JOURNEY</h1>
+            <p>
+                Rent your favourite car, SUV or bike with Drive Easy.
+                Enjoy comfortable rides, affordable prices and easy booking.
+            </p>
+        </div>
+
+        <div class="hero-badge">
+            🚘 Reliable · Affordable · Comfortable
+        </div>
+    </section>
+
+    <!-- VEHICLES LISTING -->
+    <main class="container" id="vehicles">
+
+        <div class="toolbar">
+            <h2>
+                Vehicles Listing
+                <span class="vehicle-count">
+                    (<span id="vehicleCount">6</span> vehicles)
+                </span>
+            </h2>
+
+            <div class="search-sort">
+                <input type="search" id="searchInput"
+                    placeholder="🔍 Search vehicles...">
+
+                <select id="sort">
+                    <option value="default">Sort by: Recommended</option>
+                    <option value="low">Price: Low to High</option>
+                    <option value="high">Price: High to Low</option>
+                    <option value="name">Name: A to Z</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- FILTER SIDEBAR -->
+            <aside class="filters">
+                <h3>⚙ FILTERS</h3>
+
+                <h4>Vehicle Type</h4>
+
+                <label class="filter-option">
+                    <input type="checkbox" class="category" value="Car">
+                    Car
+                </label>
+
+                <label class="filter-option">
+                    <input type="checkbox" class="category" value="SUV">
+                    SUV
+                </label>
+
+                <label class="filter-option">
+                    <input type="checkbox" class="category" value="Bike">
+                    Bike
+                </label>
+
+                <label class="filter-option">
+                    <input type="checkbox" class="category" value="Scooter">
+                    Scooter
+                </label>
+
+                <label class="filter-option">
+                    <input type="checkbox" class="category" value="Van">
+                    Van
+                </label>
+
+                <h4>Price Range</h4>
+
+                <div class="price-label">
+                    <span>₹500</span>
+                    <strong id="priceValue">₹3,000/day</strong>
+                </div>
+
+                <input type="range" id="priceRange"
+                    min="500" max="3000" value="3000" step="100">
+
+                <p style="font-size: 12px; color: #64748b;">
+                    Maximum daily budget
+                </p>
+
+                <button class="clear-btn" id="clearFilters">
+                    Clear All Filters
+                </button>
+            </aside>
+
+            <!-- VEHICLE CARDS -->
+            <section class="vehicle-grid" id="vehicleGrid"></section>
+
+        </div>
+
+        <!-- VIEW ALL VEHICLE DETAILS -->
+        <div class="all-details-container">
+            <button class="all-details-btn" onclick="window.location.href='vehicle_details.html'">
+                View All Vehicle Details
+            </button>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        <h3>
+            DRIVE <span class="footer-bolt">⚡</span> EASY
+        </h3>
+
+        <p>VEHICLE RENTAL SYSTEM</p>
+        <p>© 2026 Drive Easy. All Rights Reserved.</p>
+        <p>Ride Smart · Ride Safe · Ride Easy 🚗</p>
+    </footer>
+
+    <script>
+        // VEHICLE INFORMATION
+        const vehicles = [
+            {
+                name: "Honda City",
+                type: "Car",
+                price: 1500,
+                icon: "🚘",
+                seats: "5 Seats",
+                description: "Smooth and comfortable city driving.",
+                background: "car-bg"
+            },
+            {
+                name: "Swift Dzire",
+                type: "Car",
+                price: 1200,
+                icon: "🚗",
+                seats: "5 Seats",
+                description: "Affordable car for everyday travel.",
+                background: "car-bg"
+            },
+            {
+                name: "Hyundai Creta",
+                type: "SUV",
+                price: 2500,
+                icon: "🚙",
+                seats: "5 Seats",
+                description: "Spacious SUV for family adventures.",
+                background: "suv-bg"
+            },
+            {
+                name: "Innova Crysta",
+                type: "Van",
+                price: 2800,
+                icon: "🚐",
+                seats: "7 Seats",
+                description: "Perfect for family and group journeys.",
+                background: "van-bg"
+            },
+            {
+                name: "Royal Enfield",
+                type: "Bike",
+                price: 800,
+                icon: "🏍️",
+                seats: "2 Seats",
+                description: "Enjoy every ride with a classic bike.",
+                background: "bike-bg"
+            },
+            {
+                name: "Activa 6G",
+                type: "Scooter",
+                price: 500,
+                icon: "🛵",
+                seats: "2 Seats",
+                description: "Easy and economical city travel.",
+                background: "scooter-bg"
+            }
+        ];
+
+        const vehicleGrid = document.getElementById("vehicleGrid");
+        const searchInput = document.getElementById("searchInput");
+        const sort = document.getElementById("sort");
+        const priceRange = document.getElementById("priceRange");
+        const priceValue = document.getElementById("priceValue");
+        const vehicleCount = document.getElementById("vehicleCount");
+
+        // DISPLAY VEHICLES
+        function displayVehicles() {
+            const selectedCategories = [
+                ...document.querySelectorAll(".category:checked")
+            ].map(input => input.value);
+
+            const searchText = searchInput.value.toLowerCase().trim();
+            const maximumPrice = Number(priceRange.value);
+
+            let filteredVehicles = vehicles.filter(vehicle => {
+                const categoryMatch =
+                    selectedCategories.length === 0 ||
+                    selectedCategories.includes(vehicle.type);
+
+                const priceMatch = vehicle.price <= maximumPrice;
+
+                const searchMatch =
+                    vehicle.name.toLowerCase().includes(searchText) ||
+                    vehicle.type.toLowerCase().includes(searchText);
+
+                return categoryMatch && priceMatch && searchMatch;
+            });
+
+            // SORT VEHICLES
+            if (sort.value === "low") {
+                filteredVehicles.sort((a, b) => a.price - b.price);
+            }
+
+            if (sort.value === "high") {
+                filteredVehicles.sort((a, b) => b.price - a.price);
+            }
+
+            if (sort.value === "name") {
+                filteredVehicles.sort((a, b) =>
+                    a.name.localeCompare(b.name)
+                );
+            }
+
+            vehicleCount.textContent = filteredVehicles.length;
+
+            if (filteredVehicles.length === 0) {
+                vehicleGrid.innerHTML = `
+                    <div class="no-results">
+                        <h3>No Vehicles Found 😕</h3>
+                        <p>Try changing your search or filters.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            vehicleGrid.innerHTML = filteredVehicles.map(vehicle => `
+                <article class="vehicle-card">
+
+                    <div class="vehicle-image ${vehicle.background}">
+                        <span class="category-badge">
+                            ${vehicle.type}
+                        </span>
+
+                        <span class="vehicle-icon">
+                            ${vehicle.icon}
+                        </span>
+                    </div>
+
+                    <div class="vehicle-info">
+                        <h3>${vehicle.name}</h3>
+
+                        <p class="description">
+                            ⭐ 4.8 | ${vehicle.seats}<br>
+                            ${vehicle.description}
+                        </p>
+
+                        <div class="vehicle-bottom">
+                            <p class="price">
+                                ₹${vehicle.price.toLocaleString("en-IN")}
+                                <span>/ day</span>
+                            </p>
+
+                            <!-- UPDATED BOOK NOW LINK -->
+                            <a
+                                href="booking.html?price=${vehicle.price}&name=${encodeURIComponent(vehicle.name)}"
+                                class="book-btn">
+                                Book Now
+                            </a>
+                        </div>
+                    </div>
+
+                </article>
+            `).join("");
+        }
+
+        // VIEW ALL VEHICLE DETAILS
+        function showAllDetails() {
+            const allDetails = vehicles.map(vehicle => {
+                return (
+                    "Vehicle: " + vehicle.name +
+                    "\nCategory: " + vehicle.type +
+                    "\nPrice: ₹" +
+                    vehicle.price.toLocaleString("en-IN") +
+                    " per day" +
+                    "\nSeating Capacity: " + vehicle.seats +
+                    "\nDescription: " + vehicle.description
+                );
+            }).join("\n\n--------------------------\n\n");
+
+            alert("ALL VEHICLE DETAILS\n\n" + allDetails);
+        }
+
+        // CATEGORY FILTERS
+        document.querySelectorAll(".category").forEach(input => {
+            input.addEventListener("change", displayVehicles);
+        });
+
+        // SEARCH
+        searchInput.addEventListener("input", displayVehicles);
+
+        // SORTING
+        sort.addEventListener("change", displayVehicles);
+
+        // PRICE SLIDER
+        priceRange.addEventListener("input", function () {
+            priceValue.textContent =
+                "₹" + Number(this.value).toLocaleString("en-IN") + "/day";
+
+            displayVehicles();
+        });
+
+        // CLEAR ALL FILTERS
+        document.getElementById("clearFilters").addEventListener("click", function () {
+            document.querySelectorAll(".category").forEach(input => {
+                input.checked = false;
+            });
+
+            searchInput.value = "";
+            sort.value = "default";
+            priceRange.value = 3000;
+            priceValue.textContent = "₹3,000/day";
+
+            displayVehicles();
+        });
+
+        // INITIAL DISPLAY
+        displayVehicles();
+    </script>
+
+</body>
+</html>
